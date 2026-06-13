@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>슝슝 맛집 — 숭실대 맛집 추천 (최종본)</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--text:#1f2433;--sub:#6b7280;--primary:#3b5bdb;--primary2:#5c7cfa;--accent:#ff922b;--good:#2f9e44;--bad:#e03131;--soso:#f08c00;--line:#e9ecef;--shadow:0 10px 30px rgba(20,30,80,.10)}
+[data-theme="dark"]{--bg:#0f1320;--card:#1a2030;--text:#e8ecf4;--sub:#9aa3b2;--primary:#5c7cfa;--primary2:#748ffc;--accent:#ffa94d;--good:#51cf66;--bad:#ff6b6b;--soso:#ffd43b;--line:#2a3142;--shadow:0 10px 30px rgba(0,0,0,.45)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);transition:.3s}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:78px}
+header{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:16px 18px 14px;box-shadow:var(--shadow)}
+.htop{display:flex;justify-content:space-between;align-items:center}
+.htop h1{font-size:19px;font-weight:800;letter-spacing:-.5px}
+.htop .sub{font-size:11.5px;opacity:.85;margin-top:2px}
+.theme-btn{background:rgba(255,255,255,.2);border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;transition:.2s}
+.theme-btn:active{transform:scale(.9)}
+.stats-row{display:flex;gap:8px;margin-top:14px}
+.stat{flex:1;background:rgba(255,255,255,.15);border-radius:12px;padding:8px 6px;text-align:center}
+.stat .n{font-size:18px;font-weight:800}
+.stat .l{font-size:10px;opacity:.9;margin-top:1px}
+main{padding:18px 16px}
+.view{display:none;animation:fade .35s}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.intro{text-align:center;padding:18px 6px}
+.mascot{font-size:74px;margin:6px 0 4px;display:inline-block;animation:bob 2.4s ease-in-out infinite}
+.mascot img{width:130px;height:130px;object-fit:contain}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.intro h2{font-size:21px;font-weight:800;margin-bottom:6px}
+.intro p{color:var(--sub);font-size:13.5px;line-height:1.6;margin-bottom:20px}
+.dice{font-size:58px;margin:6px 0 14px;display:inline-block}
+.dice.roll{animation:spin .7s ease}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(720deg)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:14px;font-weight:700;cursor:pointer;transition:.18s;font-family:inherit;text-decoration:none}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:16px;padding:15px 30px;box-shadow:var(--shadow);width:100%}
+.btn-ghost{background:var(--card);color:var(--text);border:1.5px solid var(--line);font-size:14px;padding:12px 18px}
+.card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;animation:pop .4s}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+.card .hero{height:120px;background:linear-gradient(135deg,var(--primary2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:54px;position:relative}
+.card .badge{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.35);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.card .progress{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.35);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.card .body{padding:18px}
+.card .body h3{font-size:21px;font-weight:800;margin-bottom:4px}
+.card .meta{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 4px}
+.chip{font-size:12px;font-weight:600;padding:5px 11px;border-radius:10px;background:var(--bg);color:var(--sub);display:inline-flex;align-items:center;gap:4px}
+.chip.live-open{background:rgba(47,158,68,.15);color:var(--good)}
+.chip.live-close{background:rgba(224,49,49,.15);color:var(--bad)}
+.menu-label{font-size:12px;color:var(--sub);margin-top:14px;font-weight:700}
+.menu-list{font-size:14px;line-height:1.7;margin-top:3px}
+.map-btns{display:flex;gap:8px;margin-top:14px}
+.map-btns .btn{flex:1;font-size:13px;padding:11px}
+.kakao{background:#fee500;color:#3a1d1d}
+.naver{background:#03c75a;color:#fff}
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.actions .btn{font-size:13px;padding:12px 4px;flex-direction:column;gap:2px}
+.a-go{background:var(--good);color:#fff}
+.a-bad{background:var(--bad);color:#fff}
+.a-soso{background:var(--soso);color:#fff}
+.again{margin-top:12px}
+#kmap{width:100%;height:170px;background:var(--line)}
+.kmap-fallback{height:170px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:var(--sub);font-size:12px;background:var(--bg);text-align:center;padding:10px}
+.empty{text-align:center;padding:40px 16px}
+.empty .mascot{font-size:70px}
+.empty h3{font-size:18px;margin:8px 0 6px}
+.empty p{color:var(--sub);font-size:13.5px;line-height:1.6;margin-bottom:18px}
+.sec-title{font-size:16px;font-weight:800;margin:4px 0 14px;display:flex;align-items:center;gap:7px}
+.log{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:13px;padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow)}
+.log .ic{font-size:22px}
+.log .info{flex:1}
+.log .info .nm{font-weight:700;font-size:14px}
+.log .info .tm{font-size:11px;color:var(--sub);margin-top:1px}
+.log .tag{font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px}
+.t-go{background:rgba(47,158,68,.15);color:var(--good)}
+.t-bad{background:rgba(224,49,49,.15);color:var(--bad)}
+.t-soso{background:rgba(240,140,0,.15);color:var(--soso)}
+.bar-row{margin-bottom:11px}
+.bar-row .top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px}
+.bar-row .top .w{color:var(--sub);font-weight:700}
+.bar{height:9px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--primary),var(--primary2));transition:width .5s}
+.muted{color:var(--sub);font-size:13px;text-align:center;padding:30px 10px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--card);border-top:1px solid var(--line);display:flex;z-index:60;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.nav button{flex:1;background:none;border:none;padding:9px 0 11px;color:var(--sub);font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:inherit}
+.nav button .i{font-size:20px}
+.nav button.on{color:var(--primary)}
+#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:30px;font-size:13.5px;font-weight:700;z-index:200;opacity:0;transition:.35s;box-shadow:var(--shadow);white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.reset-link{display:block;text-align:center;margin:18px auto 0;color:var(--sub);font-size:12.5px;background:none;border:none;cursor:pointer;text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="htop">
+      <div><h1>🍽️ 슝슝 맛집</h1><div class="sub">숭실대 근처 맛집 랜덤 추천</div></div>
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="n" id="sAvail">0</div><div class="l">추천가능</div></div>
+      <div class="stat"><div class="n" id="sGo">0</div><div class="l">방문</div></div>
+      <div class="stat"><div class="n" id="sBad">0</div><div class="l">불호</div></div>
+      <div class="stat"><div class="n" id="sSoso">0</div><div class="l">물림</div></div>
+    </div>
+  </header>
+  <main>
+    <section class="view active" id="view-home">
+      <div id="homeIntro" class="intro">
+        <div class="mascot" id="mascot"><img src="ssungssung.png" alt="슝슝이" onerror="this.replaceWith(document.createTextNode('🐻'))"></div>
+        <h2>오늘 뭐 먹지?</h2>
+        <p>슝슝이가 숭실대 근처 맛집을<br>랜덤으로 추천해드려요!</p>
+        <div class="dice" id="dice">🎲</div>
+        <button class="btn btn-primary" onclick="roll()">주사위 굴리기</button>
+        <button class="reset-link" onclick="resetAll()">🔄 처음부터 다시 시작</button>
+      </div>
+      <div id="homeCard"></div>
+    </section>
+    <section class="view" id="view-record">
+      <div class="sec-title">📋 오늘의 기록</div><div id="recordList"></div>
+    </section>
+    <section class="view" id="view-stats">
+      <div class="sec-title">📊 식당별 추천 가중치</div><div id="statsList"></div>
+    </section>
+  </main>
+  <nav class="nav">
+    <button id="nav-home" class="on" onclick="go('home')"><span class="i">🏠</span>홈</button>
+    <button id="nav-record" onclick="go('record')"><span class="i">📋</span>기록</button>
+    <button id="nav-stats" onclick="go('stats')"><span class="i">📊</span>통계</button>
+  </nav>
+</div>
+<div id="toast"></div>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_JS_KEY&libraries=services"></script>
+<script>
+const SSU={lat:37.4963,lng:126.9572,name:"숭실대학교 정문"};
+const DATA=[
+  {n:"Goreng (고렝)", cat:"아시안", emo:"🍜", menu:["나시고렝","미고렝","사테"], lat:37.49531, lng:126.95511},
+  {n:"Deokone (더코네)", cat:"분식", emo:"🌶️", menu:["떡볶이","순대","튀김"], lat:37.49715, lng:126.95463},
+  {n:"긴자료코 숭실대입구역점", cat:"일식", emo:"🍣", menu:["초밥","연어덮밥","우동"], lat:37.4965, lng:126.95639},
+  {n:"면식당 숭실대점", cat:"한식", emo:"🍜", menu:["잔치국수","비빔국수","수육"], lat:37.49382, lng:126.95724},
+  {n:"마루스시", cat:"일식", emo:"🍣", menu:["모둠초밥","회덮밥","미소된장국"], lat:37.49371, lng:126.9568},
+  {n:"스톤504", cat:"양식", emo:"🍝", menu:["파스타","스테이크","리조또"], lat:37.49389, lng:126.95474},
+  {n:"손칼국수", cat:"한식", emo:"🍲", menu:["손칼국수","수제비","보쌈"], lat:37.49588, lng:126.95916},
+  {n:"McDonald's", cat:"버거", emo:"🍟", menu:["빅맥","상하이버거","맥너겟"], lat:37.49419, lng:126.95554},
+  {n:"맘스터치 숭실대입구역점", cat:"버거", emo:"🍔", menu:["싸이버거","후라이드","케이준감자"], lat:37.49701, lng:126.95989},
+  {n:"서브웨이 숭실대점", cat:"버거", emo:"🥖", menu:["이탈리안BMT","에그마요","로스트치킨"], lat:37.49673, lng:126.95658},
+  {n:"내가찜한닭", cat:"한식", emo:"🍗", menu:["찜닭","간장찜닭","로제찜닭"], lat:37.49897, lng:126.95448},
+  {n:"명품고향삼계탕", cat:"한식", emo:"🍲", menu:["삼계탕","전복삼계탕","녹두삼계탕"], lat:37.49831, lng:126.95594},
+  {n:"놀부자정육식당", cat:"한식", emo:"🥩", menu:["삼겹살","목살","된장찌개"], lat:37.49431, lng:126.95491},
+  {n:"논두렁갈비", cat:"한식", emo:"🥩", menu:["돼지갈비","갈비살","냉면"], lat:37.49523, lng:126.9591},
+  {n:"리얼후라이 숭실대점", cat:"분식", emo:"🍳", menu:["오므라이스","치킨마요","제육덮밥"], lat:37.49451, lng:126.95769},
+  {n:"밀플랜비", cat:"양식", emo:"🥗", menu:["샐러드","포케","파니니"], lat:37.49708, lng:126.95643},
+  {n:"이삭토스트 숭실대점", cat:"버거", emo:"🥪", menu:["햄치즈토스트","베이컨토스트","핫치킨"], lat:37.49657, lng:126.95458},
+  {n:"크라이치즈버거 숭실대점", cat:"버거", emo:"🍔", menu:["치즈버거","베이컨버거","감자튀김"], lat:37.49383, lng:126.95544},
+  {n:"슬로우캘리 숭실대점", cat:"양식", emo:"🥗", menu:["샐러드","닭가슴살볼","포케"], lat:37.49731, lng:126.95677},
+  {n:"청년다방 숭실대점", cat:"분식", emo:"🍢", menu:["로제떡볶이","차돌떡볶이","주먹밥"], lat:37.49526, lng:126.95771},
+  {n:"강릉초당짬뽕순두부 숭실대점", cat:"한식", emo:"🍲", menu:["짬뽕순두부","해물순두부","공기밥"], lat:37.49604, lng:126.956},
+  {n:"신의주찹쌀순대", cat:"분식", emo:"🍢", menu:["순대국","찹쌀순대","머릿고기"], lat:37.49795, lng:126.95839},
+  {n:"PHO MIN (퍼민)", cat:"아시안", emo:"🍜", menu:["쌀국수","분짜","월남쌈"], lat:37.49487, lng:126.95765},
+  {n:"멘동", cat:"일식", emo:"🍜", menu:["돈코츠라멘","마제소바","차슈동"], lat:37.49644, lng:126.95945},
+  {n:"더진국", cat:"한식", emo:"🍲", menu:["소고기국밥","순대국밥","수육"], lat:37.49758, lng:126.95593},
+  {n:"핵밥 숭실대점", cat:"한식", emo:"🍱", menu:["제육덮밥","불고기덮밥","치킨마요"], lat:37.49899, lng:126.95491},
+  {n:"익츠육회", cat:"한식", emo:"🥩", menu:["육회","육사시미","육회비빔밥"], lat:37.49584, lng:126.95874},
+  {n:"함박집", cat:"양식", emo:"🍳", menu:["함박스테이크","치즈함박","오므라이스"], lat:37.49435, lng:126.95713},
+  {n:"한상도", cat:"한식", emo:"🍱", menu:["백반","제육볶음","고등어구이"], lat:37.49372, lng:126.95821},
+  {n:"노브랜드버거 숭실대점", cat:"버거", emo:"🍔", menu:["NBB시그니처","치킨버거","감자튀김"], lat:37.49778, lng:126.95764},
+  {n:"가야성 숭실대점", cat:"중식", emo:"🥟", menu:["짜장면","짬뽕","탕수육"], lat:37.4984, lng:126.95608},
+  {n:"설쌈냉면", cat:"한식", emo:"🍜", menu:["물냉면","비빔냉면","왕만두"], lat:37.49739, lng:126.95777},
+  {n:"샹츠마라탕", cat:"중식", emo:"🌶️", menu:["마라탕","마라샹궈","꿔바로우"], lat:37.49675, lng:126.95694},
+  {n:"황새골손칼국수", cat:"한식", emo:"🍲", menu:["손칼국수","팥칼국수","겉절이"], lat:37.4982, lng:126.95987},
+  {n:"고추동제면소", cat:"일식", emo:"🍜", menu:["우동","붓카케우동","유부초밥"], lat:37.49615, lng:126.95818},
+  {n:"신전떡볶이 숭실대점", cat:"분식", emo:"🌶️", menu:["신전떡볶이","로제떡볶이","오뎅","튀김"], lat:37.49384, lng:126.95841},
+  {n:"피자스쿨 숭실대점", cat:"피자", emo:"🍕", menu:["콤비네이션피자","고구마피자","불고기피자"], lat:37.49712, lng:126.96016}
+];
+const KEY_STATE='ssung_state_v3', KEY_THEME='ssung_theme_v3';
+let state=load();
+function load(){
+  const today=new Date().toDateString();
+  let raw; try{raw=JSON.parse(localStorage.getItem(KEY_STATE));}catch(e){raw=null;}
+  if(!raw){ raw={date:today,weights:{},status:{},logs:[],counts:{go:0,bad:0,soso:0}}; DATA.forEach(d=>{raw.weights[d.n]=1;raw.status[d.n]=null;}); }
+  else if(raw.date!==today){ DATA.forEach(d=>{const w=raw.weights[d.n]??1; raw.weights[d.n]=Math.min(1,w+(1-w)*0.5); raw.status[d.n]=null;}); raw.date=today; raw.logs=[]; raw.counts={go:0,bad:0,soso:0}; }
+  DATA.forEach(d=>{ if(raw.weights[d.n]==null)raw.weights[d.n]=1; if(raw.status[d.n]===undefined)raw.status[d.n]=null; });
+  return raw;
+}
+function save(){localStorage.setItem(KEY_STATE,JSON.stringify(state));}
+let current=null;
+function distM(la1,lo1,la2,lo2){const R=6371000,t=Math.PI/180;const dLa=(la2-la1)*t,dLo=(lo2-lo1)*t;const a=Math.sin(dLa/2)**2+Math.cos(la1*t)*Math.cos(la2*t)*Math.sin(dLo/2)**2;return Math.round(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));}
+function walkMin(m){return Math.max(1,Math.round(m/67));}
+function liveOpen(d){const now=new Date(),h=now.getHours()+now.getMinutes()/60;let open=11,close=21;if(d.cat==='치킨'){open=15;close=24;}else if(d.cat==='분식'){open=11;close=22;}else if(d.cat==='버거'){open=10;close=23;}else if(d.cat==='한식'){open=10.5;close=21;}else if(d.cat==='피자'){open=11;close=23;}const isOpen=h>=open&&h<close;const cl=Math.floor(close)>24?Math.floor(close)-24:Math.floor(close);return{open:isOpen,txt:isOpen?`영업중 · ${cl}시 마감`:'영업종료'};}
+function buildQueue(){let pool=DATA.filter(d=>state.status[d.n]!=='go'&&state.status[d.n]!=='bad');pool.forEach(d=>{d._w=state.weights[d.n]*(state.status[d.n]==='soso'?0.5:1)*(0.6+Math.random()*0.8);});pool.sort((a,b)=>b._w-a._w);return pool;}
+function roll(){const dice=document.getElementById('dice');dice.classList.add('roll');dice.textContent=['🎲','🎯','🍀','✨'][Math.floor(Math.random()*4)];setTimeout(()=>{dice.classList.remove('roll');showCard();},720);}
+function showCard(){const q=buildQueue();document.getElementById('homeIntro').style.display='none';const host=document.getElementById('homeCard');if(q.length===0){current=null;host.innerHTML='<div class="empty"><div class="mascot">😴</div><h3>더 이상 추천할 맛집이 없어요</h3><p>오늘은 충분히 둘러봤어요!<br>내일 다시 만나요 🍚</p><button class="btn btn-ghost" onclick="backIntro()">처음으로</button></div>';return;}current=q[0];render(current,q.length);}
+function render(d,remain){const dm=distM(SSU.lat,SSU.lng,d.lat,d.lng),wm=walkMin(dm),lv=liveOpen(d),w=Math.round(state.weights[d.n]*100),nq=encodeURIComponent(d.n);
+  document.getElementById('homeCard').innerHTML=`<div class="card"><div class="hero"><span class="badge">${d.cat}</span><span class="progress">남은 추천 ${remain}곳</span>${d.emo}</div><div class="body"><h3>${d.n}</h3><div class="meta"><span class="chip">📍 숭실대서 ${dm}m</span><span class="chip">🚶 도보 ${wm}분</span><span class="chip ${lv.open?'live-open':'live-close'}">${lv.open?'🟢':'🔴'} ${lv.txt}</span><span class="chip">⭐ 추천도 ${w}%</span></div><div class="menu-label">🍴 대표 메뉴</div><div class="menu-list">${d.menu.join(' · ')}</div><div class="map-btns"><a class="btn kakao" target="_blank" href="https://map.kakao.com/?q=${nq}">🗺️ 카카오맵</a><a class="btn naver" target="_blank" href="https://map.naver.com/v5/search/${nq}">🟢 네이버지도</a></div><div class="actions"><button class="btn a-go" onclick="act('go')">✅<span>여기로!</span></button><button class="btn a-soso" onclick="act('soso')">😐<span>물림</span></button><button class="btn a-bad" onclick="act('bad')">👎<span>불호</span></button></div><button class="btn btn-ghost again" style="width:100%" onclick="roll()">🔄 다시 추천받기</button></div></div>`;
+  refreshStats();}
+function drawMap(d,dm){const box=document.getElementById('kmap');if(!box)return;if(typeof kakao==='undefined'||!kakao.maps){box.outerHTML=`<div class="kmap-fallback"><div>🗺️ 카카오맵 미리보기</div><div>(발표 시 카카오 JS키 입력하면 실제 지도 표시)</div><div>숭실대서 직선거리 약 ${dm}m</div></div>`;return;}const center=new kakao.maps.LatLng((SSU.lat+d.lat)/2,(SSU.lng+d.lng)/2);const map=new kakao.maps.Map(box,{center,level:4});new kakao.maps.Marker({map,position:new kakao.maps.LatLng(d.lat,d.lng)});new kakao.maps.Marker({map,position:new kakao.maps.LatLng(SSU.lat,SSU.lng)});new kakao.maps.Polyline({map,path:[new kakao.maps.LatLng(SSU.lat,SSU.lng),new kakao.maps.LatLng(d.lat,d.lng)],strokeWeight:4,strokeColor:'#3b5bdb',strokeOpacity:.8,strokeStyle:'shortdash'});}
+function act(type){if(!current)return;const d=current;if(type==='go'){state.weights[d.n]*=0.3;state.status[d.n]='go';state.counts.go++;toast('✅ 좋은 선택! 맛있게 드세요');}if(type==='bad'){state.weights[d.n]*=0.1;state.status[d.n]='bad';state.counts.bad++;toast('👎 다음엔 안 보여줄게요');}if(type==='soso'){state.weights[d.n]*=0.5;state.status[d.n]='soso';state.counts.soso++;toast('😐 후순위로 미뤄둘게요');}state.logs.unshift({n:d.n,type,t:new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})});save();refreshStats();if(type==='go')backIntro();else roll();}
+function backIntro(){document.getElementById('homeCard').innerHTML='';document.getElementById('homeIntro').style.display='block';}
+function refreshStats(){const avail=DATA.filter(d=>state.status[d.n]!=='go'&&state.status[d.n]!=='bad').length;document.getElementById('sAvail').textContent=avail;document.getElementById('sGo').textContent=state.counts.go;document.getElementById('sBad').textContent=state.counts.bad;document.getElementById('sSoso').textContent=state.counts.soso;renderRecord();renderStatsView();}
+function renderRecord(){const host=document.getElementById('recordList');if(!state.logs.length){host.innerHTML='<div class="muted">아직 기록이 없어요.<br>홈에서 추천을 받아보세요! 🎲</div>';return;}const map={go:['✅','방문','t-go'],bad:['👎','불호','t-bad'],soso:['😐','물림','t-soso']};host.innerHTML=state.logs.map(l=>{const m=map[l.type];return `<div class="log"><div class="ic">${m[0]}</div><div class="info"><div class="nm">${l.n}</div><div class="tm">${l.t}</div></div><div class="tag ${m[2]}">${m[1]}</div></div>`;}).join('');}
+function renderStatsView(){const host=document.getElementById('statsList');const arr=[...DATA].sort((a,b)=>state.weights[b.n]-state.weights[a.n]);host.innerHTML=arr.map(d=>{const w=Math.round(state.weights[d.n]*100);const st=state.status[d.n];const icon=st==='go'?'✅':st==='bad'?'🚫':st==='soso'?'😐':'⭐';return `<div class="bar-row"><div class="top"><span>${icon} ${d.n}</span><span class="w">${w}%</span></div><div class="bar"><i style="width:${w}%"></i></div></div>`;}).join('');}
+function go(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById('view-'+v).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));document.getElementById('nav-'+v).classList.add('on');}
+function toggleTheme(){const cur=document.documentElement.getAttribute('data-theme');const next=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);document.getElementById('themeBtn').textContent=next==='dark'?'☀️':'🌙';localStorage.setItem(KEY_THEME,next);}
+(function(){const t=localStorage.getItem(KEY_THEME)||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+let toastTimer;function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),1800);}
+function resetAll(){if(!confirm('오늘 기록과 가중치를 모두 초기화할까요?'))return;localStorage.removeItem(KEY_STATE);state=load();backIntro();refreshStats();toast('🔄 초기화 완료!');}
+refreshStats();
+</script>
+</body>
+</html>
